@@ -1,8 +1,10 @@
 describe Mapgruff::Sanitizer do
   context "sanitizing incidents" do
-    it "removes unused keys from incidents hash" do
+    it "removes all unused keys" do
       incidents = [
         {
+          "responder"            => "Jim",
+          "altitude"             => "146",
           "id"                   => "123",
           "latitude"             => "1234.234",
           "longitude"            => "1234.234",
@@ -17,11 +19,13 @@ describe Mapgruff::Sanitizer do
           "date"                 => "8/9/2014 09:28",
           "block"                => "19XX 4th Ave"
         }]
-      unused_keys = ["id", "latitude", "longitude", "local_identifier", "location_icon", "arrest_status", "location_description"]
+      unused_keys = ["id", "latitude", "longitude", "local_identifier", "location_icon", "arrest_status", "location_description", "altitude", "responder"]
 
       sanitized_incidents = Mapgruff::Sanitizer.sanitize(incidents)
 
-      unused_keys.each { |key| expect(sanitized_incidents).not_to include(key)}
+      sanitized_incidents.each do |incident|
+        unused_keys.each { |key| expect(incident.keys).not_to include(key)}
+      end
     end
   end
 end

@@ -1,8 +1,12 @@
 module Mapgruff
   class Sanitizer
+
+    USED_KEYS = ["city", "category", "primary_type", "description", "date", "block"]
+
     def self.sanitize(incidents)
-      undesired_keys = ["id", "latitude", "longitude", "local_identifier", "location_icon", "arrest_status", "location_description"]
-      incidents.each { |incident| undesired_keys.each { |k| incident.delete(k)} }
+      incidents.each do |incident|
+        incident.keys.each { |k| incident.delete(k) unless USED_KEYS.include?(k)}
+      end
       incidents
     end
   end
