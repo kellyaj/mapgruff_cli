@@ -13,7 +13,7 @@ module Mapgruff
     end
 
     def self.get_city_url(city)
-      CITY_URLS[city]
+      CITY_URLS[city.downcase.to_sym]
     end
   end
 end
