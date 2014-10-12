@@ -1,6 +1,7 @@
 require_relative 'presenter'
 require_relative 'table_generator'
 require_relative 'incident_fetcher'
+require_relative 'sanitizer'
 
 module Mapgruff
   class Runner
@@ -11,16 +12,11 @@ module Mapgruff
 
     def run(city)
       incidents = IncidentFetcher.fetch_for_city(city)
-      last_five = incidents.last(5)
-      generator = TableGenerator.new(sanitize_incidents(last_five))
+      sanitized_incidents = Sanitizer.sanitize(incidents.last(5))
+      generator = TableGenerator.new(sanitized_incidents)
       @presenter = Presenter.new(@output, generator)
       @presenter.present_table
     end
 
-    def sanitize_incidents(incidents)
-      undesired_keys = ["id", "latitude", "longitude", "local_identifier", "location_icon", "arrest_status", "location_description"]
-      incidents.each { |incident| undesired_keys.each { |k| incident.delete(k)} }
-      incidents
-    end
   end
 end
