@@ -82,18 +82,23 @@ module Mapgruff
 
     def create_data_row(incident)
       data_row = "| "
-      incident.each do |k, v|
-        header_size = @column_sizes[k]
-        difference = 0
-        if header_size > v.length
-          difference = header_size - v.length
-        end
-        data_row += v.upcase
-        data_row += (" " * (difference - 1))
-        data_row += "| "
+      HEADERS.each do |key|
+        data_row += append_to_data_row(key, incident[key])
       end
       data_row.chop!
       data_row += "\r\n"
+    end
+
+    def append_to_data_row(k, v)
+      data_row = ""
+      header_size = @column_sizes[k]
+      difference = 0
+      if header_size > v.length
+        difference = header_size - v.length
+      end
+      data_row += v.upcase
+      data_row += (" " * (difference - 1))
+      data_row += "| "
     end
 
     def create_bottom_row
