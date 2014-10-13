@@ -3,13 +3,14 @@ require 'httparty'
 module Mapgruff
   class IncidentFetcher
 
-    CITY_URLS = {
-                  :chicago => "http://198.58.110.111/all_chicago",
-                  :seattle => "http://198.58.110.111/all_seattle"
-                }
+    BASE_URL = "http://198.58.110.111"
+
+    CITY_URLS = { :chicago => "#{BASE_URL}/all_chicago",
+                  :seattle => "#{BASE_URL}/all_seattle" }
 
     def self.fetch_for_city(city)
-      JSON.parse(HTTParty.get(get_city_url(city)))
+      city_url = get_city_url(city)
+      JSON.parse(HTTParty.get(city_url))
     end
 
     def self.get_city_url(city)
