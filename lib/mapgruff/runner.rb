@@ -1,7 +1,7 @@
-require_relative 'presenter'
-require_relative 'table_generator'
-require_relative 'incident_fetcher'
-require_relative 'sanitizer'
+require 'mapgruff/presenter'
+require 'mapgruff/table_generator'
+require 'mapgruff/incident_fetcher'
+require 'mapgruff/sanitizer'
 
 module Mapgruff
   class Runner

@@ -4,3 +4,6 @@ lib = File.expand_path("../../lib/", __FILE__)
 $:.unshift lib unless $:.include?(lib)
 
 require "mapgruff"
+
+runner = Mapgruff::Runner.new(STDOUT)
+runner.run("Seattle")
