@@ -3,7 +3,19 @@
 lib = File.expand_path("../../lib/", __FILE__)
 $:.unshift lib unless $:.include?(lib)
 
+require "optparse"
+
+options = {}
+
+opt_parser = OptionParser.new do |opt|
+  opt.on("--city CITY") do |c|
+    options[:city] = c
+  end
+end
+
+opt_parser.parse!
+
 require "mapgruff"
 
 runner = Mapgruff::Runner.new(STDOUT)
-runner.run("Seattle")
+runner.run(options[:city])
