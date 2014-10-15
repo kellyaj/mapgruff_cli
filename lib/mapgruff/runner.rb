@@ -10,9 +10,10 @@ module Mapgruff
       @output = output
     end
 
-    def run(city)
-      incidents = IncidentFetcher.fetch_for_city(city)
-      sanitized_incidents = Sanitizer.sanitize(incidents.last(5))
+    def run(options)
+      limit = options[:limit].to_i
+      incidents = IncidentFetcher.fetch_for_city(options[:city])
+      sanitized_incidents = Sanitizer.sanitize(incidents.last(limit))
       generator = TableGenerator.new(sanitized_incidents)
       @presenter = Presenter.new(@output, generator)
       @presenter.present_table

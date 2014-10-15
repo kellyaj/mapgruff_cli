@@ -11,6 +11,9 @@ opt_parser = OptionParser.new do |opt|
   opt.on("--city CITY") do |c|
     options[:city] = c
   end
+  opt.on("--limit LIMIT") do |l|
+    options[:limit] = l
+  end
 end
 
 opt_parser.parse!
@@ -18,4 +21,4 @@ opt_parser.parse!
 require "mapgruff"
 
 runner = Mapgruff::Runner.new(STDOUT)
-runner.run(options[:city])
+runner.run(options)
